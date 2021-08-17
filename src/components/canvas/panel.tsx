@@ -37,6 +37,7 @@ class RectInfoList {
   }
 
   mouseDown = (x: number, y: number) => {
+    console.log('fff');
     for (let i = this.rectList.length - 1; i >= 0; i--) {
       if (this.rectList[i].checkIn(x, y)) {
         this.selectedItem = i;
@@ -55,11 +56,11 @@ class RectInfoList {
 
 const Panel: React.SFC = () => {
   const max = 400, min = 0
-  const orectInfoList:RectInfoList = new RectInfoList
+  const orectInfoList = new RectInfoList()
   const [rectInfoList, setRectInfoList] = useState(orectInfoList)
 
-  const defaultRectInfo = [100, 100, 200, 200]
-  const [rectInfo, setRectInfo] = useState(defaultRectInfo)
+  // const defaultRectInfo = [100, 100, 200, 200]
+  // const [rectInfo, setRectInfo] = useState(defaultRectInfo)
 
   const onClick = () => {
     const posX = Math.floor(Math.random() * (max - min + 1)) + min;
@@ -68,10 +69,17 @@ const Panel: React.SFC = () => {
     const height = Math.floor(Math.random() * (max - posY + 1)) + min;
 
     const newRectInfo = [posX, posY, width, height]
-    setRectInfo(newRectInfo)
+    // setRectInfo(newRectInfo)
 
     let newRect = new RectInfo(newRectInfo)
     rectInfoList.rectList.push(newRect)
+
+    let newRectInfoList = new RectInfoList()
+    newRectInfoList.rectList = rectInfoList.rectList
+    newRectInfoList.selectedItem = rectInfoList.selectedItem
+    
+    setRectInfoList(newRectInfoList)
+
     // console.log(rectInfoList.rectList);
   }
 
@@ -89,9 +97,9 @@ const Panel: React.SFC = () => {
     <PanelContainer>
       <Canvas rectInfoList={rectInfoList} mouseDown={rectInfoList.mouseDown}  mouseMove={rectInfoList.mouseMove} />
       <DrawButton children='Draw Rectangle' onClick={onClick} />
-      {
+{/*      {
         inputList
-      }
+      }*/}
     </PanelContainer>
   )
 }

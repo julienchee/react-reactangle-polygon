@@ -20,9 +20,8 @@ const Canvas: React.SFC<CanvasProps> = ({rectInfoList, mouseDown, mouseMove}) =>
       let ctx = canvasCtxRef.current; // Assigning to a temp variable
       ctx!.beginPath(); // Note the Non Null Assertion
       ctx!.clearRect(0,0,400,400)
-      console.log(rectInfoList.rectList)
+
       for (let i of rectInfoList.rectList) {
-        console.log(i)
         ctx!.strokeStyle = '#000';
         // let temp = rectInfoList.rectList[i]
         let temp = i
