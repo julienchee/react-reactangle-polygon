@@ -73,14 +73,16 @@ const Panel: React.SFC = () => {
 
     let newRect = new RectInfo(newRectInfo)
     rectInfoList.rectList.push(newRect)
+    changeRectInfoList();
+    // console.log(rectInfoList.rectList);
+  }
 
+  const changeRectInfoList = () => {
     let newRectInfoList = new RectInfoList()
     newRectInfoList.rectList = rectInfoList.rectList
     newRectInfoList.selectedItem = rectInfoList.selectedItem
     
     setRectInfoList(newRectInfoList)
-
-    // console.log(rectInfoList.rectList);
   }
 
   const inputList = () => {
@@ -95,7 +97,7 @@ const Panel: React.SFC = () => {
 
   return (
     <PanelContainer>
-      <Canvas rectInfoList={rectInfoList} mouseDown={rectInfoList.mouseDown}  mouseMove={rectInfoList.mouseMove} />
+      <Canvas rectInfoList={rectInfoList} mouseDown={rectInfoList.mouseDown}  mouseMove={rectInfoList.mouseMove} changeRectInfoList={changeRectInfoList}/>
       <DrawButton children='Draw Rectangle' onClick={onClick} />
 {/*      {
         inputList

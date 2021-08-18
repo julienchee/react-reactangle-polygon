@@ -5,9 +5,10 @@ interface CanvasProps {
   rectInfoList: any
   mouseDown: (x: number, y: number) => void
   mouseMove: (x: number, y: number) => void
+  changeRectInfoList: () => void
 }
 
-const Canvas: React.SFC<CanvasProps> = ({rectInfoList, mouseDown, mouseMove}) => {
+const Canvas: React.SFC<CanvasProps> = ({rectInfoList, mouseDown, mouseMove, changeRectInfoList}) => {
   let canvasRef = useRef<HTMLCanvasElement | null>(null);
   let canvasCtxRef = React.useRef<CanvasRenderingContext2D | null>(null);
   const [movementStatus, setMovementStatus] = useState(Boolean)
@@ -46,15 +47,20 @@ const Canvas: React.SFC<CanvasProps> = ({rectInfoList, mouseDown, mouseMove}) =>
       if (event.type === 'mousedown') {
         const x = event.pageX - canvasRef.current.offsetLeft
         const y = event.pageY - canvasRef.current.offsetTop
-        setMovementStatus(true)
         setFirstPos([x, y])
+        setMovementStatus(true)
         mouseDown(x, y)
+        changeRectInfoList()
       }
 
       if (event.type === 'mousemove' && movementStatus) {
         const w = event.pageX - canvasRef.current.offsetLeft - firstPos[0]
         const h = event.pageY - canvasRef.current.offsetTop - firstPos[1]
+        const x = event.pageX - canvasRef.current.offsetLeft
+        const y = event.pageY - canvasRef.current.offsetTop
+        setFirstPos([x, y])
         mouseMove(w, h)
+        changeRectInfoList()
       }
 
       if (event.type === 'mouseup') {
